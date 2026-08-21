@@ -182,7 +182,7 @@ def solve_full(P: Params) -> dict:
     try:
         sol = solve_bvp(lambda t, y: odes(t, y, R, P),
                          lambda a, b: bcs(a, b, P),
-                         x, y0, tol=P.tol, max_nodes=200000, verbose=0)
+                         x, y0, tol=P.tol, max_nodes=20000, verbose=0)
         if not sol.success:
             raise RuntimeError(sol.message)
 
@@ -195,7 +195,7 @@ def solve_full(P: Params) -> dict:
             y_ext = sol.sol(np.clip(x_ext, x_ext.min(), sol.x.max()))
             sol = solve_bvp(lambda t, y: odes(t, y, R, P),
                              lambda a, b: bcs(a, b, P),
-                             x_ext, y_ext, tol=P.tol, max_nodes=200000, verbose=0)
+                             x_ext, y_ext, tol=P.tol, max_nodes=20000, verbose=0)
             if not sol.success:
                 raise RuntimeError(sol.message)
     except Exception as exc:  # noqa: BLE001
